@@ -120,3 +120,14 @@ RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 /var/www/storage \
     && chmod -R 775 /var/www/bootstrap/cache
 
+CMD ["bash", "-c", "composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-progress --no-plugins --no-scripts --no-ansi \
+    && npm install --production --omit=dev --prefer-offline --no-audit --progress=false \
+    && npm install laravel-mix@latest \
+    && npm install --save-dev vite laravel-vite-plugin \
+    && npm run build \
+    && composer dump-autoload -o \
+    && php artisan key:generate --no-interaction --force \
+    && php artisan migrate:fresh --seed --no-interaction --force \
+    && php artisan optimize:clear \
+    && php artisan storage:link \
+    && php artisan horizon:publish"]
