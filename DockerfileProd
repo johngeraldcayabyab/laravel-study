@@ -33,6 +33,7 @@ RUN apt-get update && \
         libxslt1-dev \
         icu-devtools \
         libicu-dev \
+        php-pear \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js
@@ -67,9 +68,6 @@ RUN docker-php-ext-install intl
 
 # Install the PHP gmp extention
 RUN docker-php-ext-install gmp
-
-# Install the PHP gmp extention
-RUN docker-php-ext-install pear
 
 ######################################
 ## PHPRedis:
