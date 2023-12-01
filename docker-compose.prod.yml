@@ -52,20 +52,10 @@ services:
       - './docker/mysql/my.cnf:/etc/mysql/my.cnf'
     networks:
       - app-network
-  redis:
-    image: redis:6
-    volumes:
-      - 'data.redis:/data'
-    networks:
-      - app
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
 #Docker Networks
 networks:
   app-network:
     driver: bridge
 volumes:
   dbdata:
-    driver: local
-  redis:
     driver: local
