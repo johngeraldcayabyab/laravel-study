@@ -101,6 +101,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Add user for laravel application
 RUN groupadd -g 1000 www && useradd -u 1000 -ms /bin/bash -g www www
+RUN useradd -ms /bin/bash monoportal
 
 # Copy existing application directory contents and set correct permissions
 COPY --chown=www:www . /var/www
@@ -108,7 +109,6 @@ COPY --chown=www:www . /var/www
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
-
 
 # Add post-deployment commands
 RUN chown -R www-data:www-data /var/www \
@@ -119,3 +119,4 @@ RUN chown -R www-data:www-data /var/www \
     && chown -R monoportal:www-data /var/www/bootstrap/cache \
     && chmod -R 775 /var/www/storage \
     && chmod -R 775 /var/www/bootstrap/cache
+
