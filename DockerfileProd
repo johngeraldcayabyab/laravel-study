@@ -115,5 +115,6 @@ CMD ["bash", "-c", "\
     php artisan migrate:fresh --seed --no-interaction --force && \
     php artisan optimize:clear && \
     php artisan storage:link && \
-    php artisan horizon:publish"]
+    php artisan horizon:publish \
+    >> /var/www/storage/logs/container_startup.log 2>&1"]
 
