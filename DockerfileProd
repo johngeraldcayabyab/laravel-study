@@ -108,3 +108,18 @@ COPY --chown=www:www . /var/www
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
+
+
+ARG HOST_USER_ID
+ARG HOST_GROUP_ID
+
+# Add post-deployment commands
+RUN usermod -u $HOST_USER_ID www-data \
+&& groupmod -g $HOST_GROUP_ID www-data \
+&& chown -R www-data:www-data /var/www \
+&& find /var/www -type f -exec chmod 644 {} \; \
+&& find /var/www -type d -exec chmod 755 {} \; \
+&& chown -R www-data:www-data /var/www/storage \
+&& chown -R www-data:www-data /var/www/bootstrap/cache \
+&& chmod -R 775 /var/www/storage \
+&& chmod -R 775 /var/www/bootstrap/cache
