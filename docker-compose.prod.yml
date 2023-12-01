@@ -5,9 +5,6 @@ services:
     build:
       context: .
       dockerfile: DockerfileProd
-      args:
-        - HOST_USER_ID=${UID}
-        - HOST_GROUP_ID=${GID}
     image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
