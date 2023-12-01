@@ -68,11 +68,13 @@ RUN docker-php-ext-install intl
 # Install the PHP gmp extention
 RUN docker-php-ext-install gmp
 
+# Install the PHP gmp extention
+RUN docker-php-ext-install pear
+
 ######################################
 ## PHPRedis:
 ######################################
 RUN pecl install redis
-#RUN docker-php-ext-install redis
 
 
 # Install the PHP gd library
