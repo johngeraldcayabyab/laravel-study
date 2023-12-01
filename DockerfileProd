@@ -1,0 +1,108 @@
+FROM php:8.2-fpm
+
+# Set working directory
+WORKDIR /var/www
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --force-yes --no-install-recommends \
+        build-essential \
+        libpng-dev \
+        libjpeg62-turbo-dev \
+        libfreetype6-dev \
+        locales \
+        zip \
+        jpegoptim optipng pngquant gifsicle \
+        vim \
+        unzip \
+        git \
+        curl \
+        libzip-dev \
+        libmemcached-dev \
+        libz-dev \
+        libpq-dev \
+        libssl-dev \
+        openssh-server \
+        libmagickwand-dev \
+        cron \
+        nano \
+        libxml2-dev \
+        libreadline-dev \
+        libgmp-dev \
+        mariadb-client \
+        libxslt1-dev \
+        icu-devtools \
+        libicu-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js
+RUN curl -sLS https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+
+# Install soap extention
+RUN docker-php-ext-install soap
+
+# Install for image manipulation
+RUN docker-php-ext-install exif
+
+# Install the PHP pcntl extention
+RUN docker-php-ext-install pcntl
+
+# Install the PHP zip extention
+RUN docker-php-ext-install zip
+
+# Install the PHP pdo_mysql extention
+RUN docker-php-ext-install pdo_mysql
+
+# Install the PHP pdo_pgsql extention
+RUN docker-php-ext-install pdo_pgsql
+
+# Install the PHP bcmath extension
+RUN docker-php-ext-install bcmath
+
+# Install the PHP intl extention
+RUN docker-php-ext-install intl
+
+# Install the PHP gmp extention
+RUN docker-php-ext-install gmp
+
+######################################
+## PHPRedis:
+######################################
+#RUN pecl install redis
+RUN docker-php-ext-install redis
+
+
+# Install the PHP gd library
+RUN docker-php-ext-install gd && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd
+
+
+#RUN pecl install igbinary && docker-php-ext-enable igbinary
+
+# Enable
+RUN docker-php-ext-install calendar
+RUN docker-php-ext-install gettext
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install sockets
+RUN docker-php-ext-install xsl
+RUN docker-php-ext-install shmop
+RUN docker-php-ext-install sysvmsg
+RUN docker-php-ext-install sysvsem
+RUN docker-php-ext-install sysvshm
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Add user for laravel application
+RUN groupadd -g 1000 www && useradd -u 1000 -ms /bin/bash -g www www
+
+# Copy existing application directory contents and set correct permissions
+COPY --chown=www:www . /var/www
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]
