@@ -71,8 +71,8 @@ RUN docker-php-ext-install gmp
 ######################################
 ## PHPRedis:
 ######################################
-#RUN pecl install redis
-RUN docker-php-ext-install redis
+RUN pecl install redis
+#RUN docker-php-ext-install redis
 
 
 # Install the PHP gd library
