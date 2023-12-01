@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# Start PHP-FPM in the background
+# Start PHP-FPM
 php-fpm &
 
-# Run additional commands
+# Wait for PHP-FPM to initialize (adjust sleep duration as needed)
+sleep 5
+
+# Run setup commands
 composer dump-autoload -o
 php artisan key:generate --no-interaction --force
 php artisan migrate:fresh --seed --no-interaction --force
