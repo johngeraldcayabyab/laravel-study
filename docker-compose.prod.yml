@@ -67,3 +67,5 @@ networks:
 volumes:
   dbdata:
     driver: local
+  data.redis:
+    driver: local
