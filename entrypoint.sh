@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # Start PHP-FPM and Supervisord in the background
 php-fpm &
