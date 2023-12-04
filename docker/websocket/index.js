@@ -4,7 +4,7 @@ const socketIO = require('socket.io');
 
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const SERVER_PORT = process.env.SERVER_PORT || 3000;
-const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ["http://localhost:8001"];
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ["http://localhost:8888"];
 
 const redisOptions = {
     port: REDIS_PORT

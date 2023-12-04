@@ -5,9 +5,20 @@
  */
 
 import axios from 'axios';
+
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+import {io} from "socket.io-client";
+
+const socketMain = io("http://0.0.0.0:3003/");
+socketMain.on('connect', () => {
+    console.log('chitae');
+    // socketMain.on('sms-deposit-refresh-browsers', function (payload) {
+    //     window.location.reload();
+    // });
+});
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
