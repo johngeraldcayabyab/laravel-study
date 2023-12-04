@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Start PHP-FPM in the background
 php-fpm &
