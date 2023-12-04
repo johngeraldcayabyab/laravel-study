@@ -36,6 +36,9 @@ RUN apt-get update && \
         supervisor \
     && rm -rf /var/lib/apt/lists/*
 
+COPY docker/nginx/etc/supervisor.d/horizon.conf /etc/supervisor/conf.d/horizon.conf
+
+
 # Install Node.js
 RUN curl -sLS https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
