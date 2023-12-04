@@ -65,7 +65,7 @@ services:
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
   supervisor:
-    image: supervisord/supervisord
+    image: app
     networks:
       - app-network
     depends_on:

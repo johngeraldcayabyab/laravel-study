@@ -33,6 +33,7 @@ RUN apt-get update && \
         libxslt1-dev \
         icu-devtools \
         libicu-dev \
+        supervisor \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js
