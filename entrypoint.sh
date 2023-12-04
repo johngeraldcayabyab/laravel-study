@@ -3,7 +3,7 @@ set -e
 
 # Start PHP-FPM and Supervisord in the background
 php-fpm &
-supervisord &
+#supervisord &
 
 # Sleep for a while to allow services to start
 sleep 5
