@@ -16,6 +16,7 @@ services:
       - './:/var/www'
       - './docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini'
       - './docker/supervisor/horizon.conf:/etc/supervisor/conf.d/horizon.conf'
+      - './docker/cron/cronjob:/etc/cron.d/cronjob'
     networks:
       - app-network
 

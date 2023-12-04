@@ -3,6 +3,7 @@
 # Start PHP-FPM and Supervisord in the background
 php-fpm &
 supervisord &
+cron -f &
 
 # Sleep for a while to allow services to start
 sleep 5
