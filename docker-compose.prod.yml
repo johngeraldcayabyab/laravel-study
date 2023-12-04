@@ -72,6 +72,8 @@ services:
       - app
       - webserver
     command: supervisord
+    volumes:
+      - ./docker/nginx/etc/supervisor.d/horizon.conf:/etc/supervisor/conf.d/horizon.conf
 #Docker Networks
 networks:
   app-network:
