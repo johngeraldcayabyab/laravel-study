@@ -64,6 +64,14 @@ services:
       - app-network
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
+  supervisor:
+    image: app
+    networks:
+      - app-network
+    depends_on:
+      - app
+      - webserver
+    command: supervisord
 #Docker Networks
 networks:
   app-network:
