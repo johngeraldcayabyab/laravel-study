@@ -34,7 +34,6 @@ RUN apt-get update && \
         icu-devtools \
         libicu-dev \
         supervisor \
-        cron \
     && rm -rf /var/lib/apt/lists/*
 
 

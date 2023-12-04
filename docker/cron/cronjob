@@ -1,1 +1,1 @@
-* * * * * /usr/local/bin/php /app/artisan schedule:run
+* * * * * /usr/local/bin/php /var/www/artisan schedule:run
