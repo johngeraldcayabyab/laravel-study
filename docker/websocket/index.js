@@ -4,55 +4,32 @@ const socketIO = require('socket.io');
 require('dotenv').config();
 
 
-const REDIS_HOST = "127.0.0.1";
-const REDIS_PORT = process.env.FORWARD_REDIS_PORT || 6379;
+const REDIS_HOST = process.env.REDIS_HOST;
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD || null;
 const REDIS_PREFIX = process.env.REDIS_PREFIX || null;
 const SERVER_PORT = 3000;
 const ALLOWED_ORIGINS = ["http://0.0.0.0:8888"];
 
 
-const redisOptions = {
-    host: REDIS_HOST,
-    port: REDIS_PORT,
-    password: REDIS_PASSWORD,
-};
-
-
-// Create a Redis client
-const subscriber = redis.createClient({host: 'redis'});
-
-
-const smsDepositChannel = `monoportal-sms-deposit-channel`;
-const smsWithdrawalChannel = `monoportal-sms-withdrawal-channel`;
-
-
-subscriber.subscribe(smsDepositChannel);
-subscriber.subscribe(smsWithdrawalChannel);
-
-
-// Listen for errors
-subscriber.on('error', (err) => {
-    console.error('Redis Error:', err);
-});
-
-// Listen for the subscribe event
-subscriber.on('subscribe', (channel, count) => {
-    console.log('Subscribed to channel:', channel);
-    console.log('Total number of subscriptions:', count);
-});
-
-subscriber.on("message", function (channel, message) {
-    console.log('incoming!!');
-    console.log("Subscriber received message in channel '" + channel + "': " + message);
-    switch (channel) {
-        case smsDepositChannel:
-            io.sockets.emit('monoportal-sms-deposit-frontend-channel', message);
-            break;
-        default:
-            io.sockets.emit('monoportal-sms-deposit-frontend-channel', message);
-            break;
+const client = redis.createClient({
+    socket: {
+        port: REDIS_PORT,
+        host: REDIS_HOST,
     }
+});
+
+(async () => {
+    await client.connect();
+})();
+
+
+client.on('connect', () => {
+    console.log('Connected!');
+});
+
+client.on("error", (err) => {
+    console.log(`Error:${err}`);
 });
 
 
@@ -72,7 +49,6 @@ const io = socketIO(server, {
 });
 
 
-
 io.on('connection', function (socket) {
     console.log('user connected to server!');
     socket.on('disconnect', function () {
@@ -83,6 +59,6 @@ io.on('connection', function (socket) {
 
 
 server.listen(SERVER_PORT, () => {
-    console.log(smsDepositChannel, smsWithdrawalChannel);
+    // console.log(smsDepositChannel, smsWithdrawalChannel);
     console.log(`Server is running at http://localhost:${SERVER_PORT} (Redis at localhost:${REDIS_PORT})`);
 });
