@@ -102,14 +102,16 @@ services:
             - sail
     websocket:
         build:
-            context: ./docker/websocket
-            dockerfile: ./Dockerfile
+            context: ./
+            dockerfile: ./docker/websocket/Dockerfile
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         networks:
             - sail
         ports:
-            - '3003:3000'
+            - '3000:3000'
+        depends_on:
+            - redis
 networks:
     sail:
         driver: bridge
