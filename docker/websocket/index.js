@@ -20,23 +20,8 @@ const redisOptions = {
 
 
 // Create a Redis client
-const subscriber = redis.createClient(redisOptions);
+const subscriber = redis.createClient({host: 'redis'});
 
-
-const server = http.createServer((req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', "*");
-    res.end(JSON.stringify({
-        ok: true
-    }));
-});
-
-const io = socketIO(server, {
-    cors: {
-        origin: "http://0.0.0.0:8888",
-        methods: ["GET", "POST"]
-    }
-});
 
 const smsDepositChannel = `monoportal-sms-deposit-channel`;
 const smsWithdrawalChannel = `monoportal-sms-withdrawal-channel`;
@@ -69,6 +54,23 @@ subscriber.on("message", function (channel, message) {
             break;
     }
 });
+
+
+const server = http.createServer((req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', "*");
+    res.end(JSON.stringify({
+        ok: true
+    }));
+});
+
+const io = socketIO(server, {
+    cors: {
+        origin: "http://0.0.0.0:8888",
+        methods: ["GET", "POST"]
+    }
+});
+
 
 
 io.on('connection', function (socket) {
