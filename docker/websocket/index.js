@@ -53,6 +53,6 @@ const smsDepositSubscriber = client.duplicate();
 })();
 
 
-server.listen(SERVER_PORT, APP_URL, () => {
+server.listen(SERVER_PORT, () => {
     console.log(`Server is running at ${APP_URL}:${SERVER_PORT} (Redis at ${APP_URL}:${REDIS_PORT})`);
 });
