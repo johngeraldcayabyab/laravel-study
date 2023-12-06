@@ -11,12 +11,12 @@ const REDIS_HOST = process.env.REDIS_HOST;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const SERVER_PORT = process.env.FORWARD_SOCKET_PORT || 3000;
 
-
-const client = redis.createClient({
-    socket: {
-        port: REDIS_PORT, host: REDIS_HOST,
-    }
-});
+//
+// const client = redis.createClient({
+//     socket: {
+//         port: REDIS_PORT, host: REDIS_HOST,
+//     }
+// });
 
 
 const server = http.createServer((req, res) => {
@@ -26,31 +26,31 @@ const server = http.createServer((req, res) => {
         ok: true
     }));
 });
+//
+// const io = socketIO(server, {
+//     cors: {
+//         origin: ORIGIN, methods: ["GET", "POST"]
+//     }
+// });
 
-const io = socketIO(server, {
-    cors: {
-        origin: ORIGIN, methods: ["GET", "POST"]
-    }
-});
 
-
-io.on('connection', function (socket) {
-    console.log('user connected to server!');
-    socket.on('disconnect', function () {
-        console.log('user left');
-        socket.disconnect();
-    });
-});
-
-const smsDepositSubscriber = client.duplicate();
-
-(async () => {
-    await smsDepositSubscriber.connect();
-    await smsDepositSubscriber.subscribe('sms-deposit-channel', (message) => {
-        console.log(message);
-        io.sockets.emit('sms-deposit-frontend-channel', message);
-    });
-})();
+// io.on('connection', function (socket) {
+//     console.log('user connected to server!');
+//     socket.on('disconnect', function () {
+//         console.log('user left');
+//         socket.disconnect();
+//     });
+// });
+//
+// const smsDepositSubscriber = client.duplicate();
+//
+// (async () => {
+//     await smsDepositSubscriber.connect();
+//     await smsDepositSubscriber.subscribe('sms-deposit-channel', (message) => {
+//         console.log(message);
+//         io.sockets.emit('sms-deposit-frontend-channel', message);
+//     });
+// })();
 
 
 server.listen(SERVER_PORT, () => {
