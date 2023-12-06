@@ -15,5 +15,5 @@ COPY ./.env ./
 COPY ./docker/websocket/ ./
 
 # Expose the port
-EXPOSE 3000
+EXPOSE 3009
 CMD npm start

@@ -9,7 +9,7 @@ const APP_PORT = process.env.APP_PORT || 80;
 const ORIGIN = `${APP_URL}:${APP_PORT}`;
 const REDIS_HOST = process.env.REDIS_HOST;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
-const SERVER_PORT = 3000;
+const SERVER_PORT = process.env.FORWARD_SOCKET_PORT || 3000;
 
 
 const client = redis.createClient({
@@ -54,5 +54,5 @@ const smsDepositSubscriber = client.duplicate();
 
 
 server.listen(SERVER_PORT, () => {
-    console.log(`Server is running at http://0.0.0.0:${SERVER_PORT} (Redis at 0.0.0.0:${REDIS_PORT})`);
+    console.log(`Server is running at ${APP_URL}:${SERVER_PORT} (Redis at ${APP_URL}:${REDIS_PORT})`);
 });
