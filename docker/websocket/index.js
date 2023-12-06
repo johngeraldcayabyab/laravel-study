@@ -25,25 +25,10 @@ const publisher = client.duplicate();
 
 (async () => {
     await subscriber.connect();
-    await publisher.connect();
-    // await client.connect();
+    await subscriber.subscribe('monoportal-sms-deposit-channel', (message) => {
+        console.log(message); // 'message'
+    });
 })();
-
-subscriber.on('connect', () => {
-    console.log('subscriber connected!');
-});
-
-subscriber.on('error', (err) => {
-    console.log(`subscriber error:${err}`);
-});
-
-publisher.on('connect', () => {
-    console.log('publisher connected!');
-});
-
-publisher.on('error', (err) => {
-    console.log(`publisher error:${err}`);
-});
 
 
 const server = http.createServer((req, res) => {
