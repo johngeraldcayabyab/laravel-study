@@ -69,7 +69,7 @@ services:
       context: ./
       dockerfile: ./docker/websocket/Dockerfile
       args:
-        - FORWARD_SOCKET_PORT=FORWARD_SOCKET_PORT
+        FORWARD_SOCKET_PORT: '${FORWARD_SOCKET_PORT}'
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     networks:
