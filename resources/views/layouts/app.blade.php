@@ -12,7 +12,7 @@
 
         socket.on('connect', () => {
             console.log('connected');
-            socket.on('monoportal-sms-deposit-frontend-channel', function (payload) {
+            socket.on('sms-deposit-frontend-channel', function (payload) {
                 console.log(payload);
             });
         });
