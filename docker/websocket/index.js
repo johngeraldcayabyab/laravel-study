@@ -19,17 +19,6 @@ const client = redis.createClient({
     }
 });
 
-const subscriber = client.duplicate();
-const publisher = client.duplicate();
-
-
-(async () => {
-    await subscriber.connect();
-    await subscriber.subscribe('monoportal-sms-deposit-channel', (message) => {
-        console.log(message); // 'message'
-    });
-})();
-
 
 const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -54,6 +43,18 @@ io.on('connection', function (socket) {
         socket.disconnect();
     });
 });
+
+const subscriber = client.duplicate();
+const publisher = client.duplicate();
+
+
+(async () => {
+    await subscriber.connect();
+    await subscriber.subscribe('monoportal-sms-deposit-channel', (message) => {
+        console.log(message); // 'message'
+        io.sockets.emit('monoportal-sms-deposit-frontend-channel', message);
+    });
+})();
 
 
 server.listen(SERVER_PORT, () => {
