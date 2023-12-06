@@ -64,6 +64,18 @@ services:
       - app-network
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
+  websocket:
+    build:
+      context: ./
+      dockerfile: ./docker/websocket/Dockerfile
+      args:
+        - FORWARD_SOCKET_PORT=FORWARD_SOCKET_PORT
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    networks:
+      - sail
+    ports:
+      - '${FORWARD_SOCKET_PORT:-3000}:3000'
 networks:
   app-network:
     driver: bridge
