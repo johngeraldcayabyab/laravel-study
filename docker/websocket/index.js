@@ -4,10 +4,12 @@ const socketIO = require('socket.io');
 require('dotenv').config();
 
 
+const APP_URL = process.env.APP_URL;
+const APP_PORT = process.env.APP_PORT || 80;
+const ORIGIN = `${APP_URL}:${APP_PORT}`;
 const REDIS_HOST = process.env.REDIS_HOST;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const SERVER_PORT = 3000;
-const ALLOWED_ORIGINS = ["http://0.0.0.0:8888"];
 
 
 const client = redis.createClient({
@@ -27,7 +29,7 @@ const server = http.createServer((req, res) => {
 
 const io = socketIO(server, {
     cors: {
-        origin: "http://0.0.0.0:8888", methods: ["GET", "POST"]
+        origin: ORIGIN, methods: ["GET", "POST"]
     }
 });
 
@@ -52,5 +54,5 @@ const smsDepositSubscriber = client.duplicate();
 
 
 server.listen(SERVER_PORT, () => {
-    console.log(`Server is running at http://localhost:${SERVER_PORT} (Redis at localhost:${REDIS_PORT})`);
+    console.log(`Server is running at http://0.0.0.0:${SERVER_PORT} (Redis at 0.0.0.0:${REDIS_PORT})`);
 });
