@@ -19,17 +19,30 @@ const client = redis.createClient({
     }
 });
 
+const subscriber = client.duplicate();
+const publisher = client.duplicate();
+
+
 (async () => {
-    await client.connect();
+    await subscriber.connect();
+    await publisher.connect();
+    // await client.connect();
 })();
 
-
-client.on('connect', () => {
-    console.log('Connected!');
+subscriber.on('connect', () => {
+    console.log('subscriber connected!');
 });
 
-client.on("error", (err) => {
-    console.log(`Error:${err}`);
+subscriber.on('error', (err) => {
+    console.log(`subscriber error:${err}`);
+});
+
+publisher.on('connect', () => {
+    console.log('publisher connected!');
+});
+
+publisher.on('error', (err) => {
+    console.log(`publisher error:${err}`);
 });
 
 
