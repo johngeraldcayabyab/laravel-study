@@ -109,7 +109,7 @@ services:
         networks:
             - sail
         ports:
-            - '3000:3000'
+            - '${FORWARD_SOCKET_PORT:-3000}:3000'
 networks:
     sail:
         driver: bridge

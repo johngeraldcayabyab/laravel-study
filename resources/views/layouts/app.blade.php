@@ -8,15 +8,13 @@
     <script src="http://0.0.0.0:3000/socket.io/socket.io.min.js"></script>
 
     <script>
-        const socket = io("http://0.0.0.0:3000",);
-
+        const socket = io("http://0.0.0.0:3000");
         socket.on('connect', () => {
             console.log('connected');
             socket.on('sms-deposit-frontend-channel', function (payload) {
                 console.log(payload);
             });
         });
-
     </script>
 </head>
 <body class="antialiased sans-serif">
