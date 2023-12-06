@@ -1,5 +1,7 @@
 FROM node:20.10-alpine3.17
 
+ARG FORWARD_SOCKET_PORT
+
 WORKDIR /websocket
 
 # Copy package.json and package-lock.json first to leverage Docker cache
@@ -15,5 +17,5 @@ COPY ./.env ./
 COPY ./docker/websocket/ ./
 
 # Expose the port
-EXPOSE 3009
+EXPOSE ${FORWARD_SOCKET_PORT}
 CMD npm start
