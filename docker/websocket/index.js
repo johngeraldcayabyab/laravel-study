@@ -9,7 +9,7 @@ const APP_PORT = process.env.APP_PORT || 80;
 const ORIGIN = `${APP_URL}:${APP_PORT}`;
 const REDIS_HOST = process.env.REDIS_HOST;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
-const SERVER_PORT = process.env.FORWARD_SOCKET_PORT || 3000;
+const SERVER_PORT = 3000;
 
 
 const client = redis.createClient({
