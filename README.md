@@ -1,5 +1,3 @@
-Run locally
+Current super stable build for production.
 
-sail up -d
-sail artisan horizon
-sail artisan schedule:run || schedule:work
+Next step is to move horizon to its own container
