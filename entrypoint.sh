@@ -22,4 +22,4 @@ docker compose -f docker-compose.prod.yml exec app php artisan storage:link
 docker compose -f docker-compose.prod.yml exec app php artisan horizon:publish
 
 # Keep the container running
-#tail -f /dev/null
+tail -f /dev/null
