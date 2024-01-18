@@ -8,6 +8,8 @@ services:
     container_name: app
     restart: unless-stopped
     tty: true
+    ports:
+      - '${APP_PORT:-80}:80'
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -68,8 +70,6 @@ services:
     build:
       context: ./
       dockerfile: ./docker/websocket/Dockerfile
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
     networks:
       - app-network
     ports:
