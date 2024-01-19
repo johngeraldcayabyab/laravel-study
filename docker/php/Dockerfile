@@ -105,12 +105,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN groupadd -g 1000 www && useradd -u 1000 -ms /bin/bash -g www www
 
 
-# Copy existing application directory contents and set correct permissions
-COPY --chown=www:www . /var/www
+# Copy entrypoint script
+COPY --chown=www:www ./docker/php/entrypoint /usr/local/bin/entrypoint
+RUN chmod +x /usr/local/bin/entrypoint
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-COPY entrypoint /usr/local/bin/entrypoint
-RUN chmod +x /usr/local/bin/entrypoint
+
 ENTRYPOINT ["entrypoint"]
 

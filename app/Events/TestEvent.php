@@ -7,18 +7,21 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Redis;
 
 class TestEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private int $test;
+    private int $id;
 
-    public function __construct($test = 12)
+    public function __construct($id = 12)
     {
-        $this->test = $test;
-        Redis::publish('sms-deposit-channel', 'bitch');
+        $this->id = $id;
+    }
+
+    public function broadcastWith(): array
+    {
+        return ['id' => $this->id];
     }
 
     public function broadcastOn()
