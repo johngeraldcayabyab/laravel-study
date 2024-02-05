@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     image: digitalocean.com/php
-    container_name: monoportal-app
+    container_name: laravel-app
     restart: unless-stopped
     tty: true
     environment:
@@ -22,7 +22,7 @@ services:
   #Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: monoportal-webserver
+    container_name: laravel-webserver
     restart: unless-stopped
     tty: true
     ports:
@@ -37,7 +37,7 @@ services:
   #MySQL Service
   mysql:
     image: mysql:8.0
-    container_name: monoportal-mysql
+    container_name: laravel-mysql
     restart: unless-stopped
     tty: true
     ports:
@@ -58,7 +58,7 @@ services:
       - app-network
   redis:
     image: redis:6
-    container_name: monoportal-redis
+    container_name: laravel-redis
     ports:
       - '${FORWARD_REDIS_PORT:-6379}:6379'
     volumes:
@@ -68,7 +68,7 @@ services:
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
   websocket:
-      container_name: monoportal-websocket
+      container_name: laravel-websocket
     build:
       context: ./
       dockerfile: ./docker/websocket/Dockerfile
