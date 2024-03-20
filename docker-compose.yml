@@ -68,7 +68,7 @@ services:
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
   websocket:
-      container_name: laravel-websocket
+    container_name: laravel-websocket
     build:
       context: ./
       dockerfile: ./docker/websocket/Dockerfile
