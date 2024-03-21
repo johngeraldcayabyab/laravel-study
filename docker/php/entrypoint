@@ -1,25 +1,23 @@
 #!/usr/bin/env bash
+#
+set -e
+#
+cd /var/www || exit 1
+#
 
-# Start PHP-FPM and Supervisord in the background
-php-fpm &
-supervisord &
-cron -f &
+npm install --production --omit=dev --prefer-offline --no-audit --progress=false
+npm install laravel-mix@latest
+npm install --save-dev vite laravel-vite-plugin
+npm run build
+composer update --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-progress --no-plugins --no-scripts --no-ansi
+composer dump-autoload -o
+php artisan key:generate --no-interaction --force
+php artisan migrate:fresh --seed --no-interaction --force
+php artisan optimize:clear
+php artisan storage:link
+php artisan horizon:publish
 
-# Sleep for a while to allow services to start
-sleep 5
 
-# Run additional commands
-docker compose exec app npm install --production --omit=dev --prefer-offline --no-audit --progress=false
-docker compose exec app npm install laravel-mix@latest
-docker compose exec app npm install --save-dev vite laravel-vite-plugin
-docker compose exec app npm run build
-docker compose exec app composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-progress --no-plugins --no-scripts --no-ansi
-docker compose exec app composer dump-autoload -o
-docker compose exec app php artisan key:generate --no-interaction --force
-docker compose exec app php artisan migrate:fresh --seed --no-interaction --force
-docker compose exec app php artisan optimize:clear
-docker compose exec app php artisan storage:link
-docker compose exec app php artisan horizon:publish
 
-# Keep the container running
-tail -f /dev/null
+
+#exec "$@"
